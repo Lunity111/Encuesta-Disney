@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    
+    <script src="./js/Vue.js"></script><!-- Creamos un script Vue.js y lo referenciamos de forma local -->
+    <title>V-Bind</title>
+</head>
+<style>
+  /* Fondo con efecto parallax */
+  body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      background-image: url(./img/Disney.jpeg);
+      background-size: cover;
+      background-attachment: fixed;
+  }
+  
+  #section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+  }
+
+  /* Recuadro para la encuesta */
+  article {
+      background-color: #f7f7f9;
+      padding: 2rem;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      color: #333;
+  }
+
+  /* Colores y estilos Disney */
+  h1, h2, h3 {
+      color: #1a73e8; /* Azul Disney */
+  }
+
+  input[type="radio"], input[type="text"], textarea {
+      margin: 10px 0;
+      padding: 8px;
+      border: 2px solid #bbd6ff;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s;
+  }
+
+  input[type="text"]:focus, textarea:focus {
+      border-color: #1a73e8;
+      box-shadow: 0px 0px 8px rgba(26, 115, 232, 0.4);
+  }
+
+  /* Botones con estilo Disney */
+  button {
+      background-color: #ff6f61;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  button:hover {
+      background-color: #ff4d4d;
+  }
+
+  ul {
+      list-style: none;
+      padding: 0;
+  }
+
+  li {
+      margin-top: 5px;
+      padding: 10px;
+      background-color: #fdecea;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  li button {
+      background-color: #ff8566;
+      padding: 5px 10px;
+      font-size: 0.8em;
+  }
+</style>
+<body>
+<header>
+
+</header>
+<section id="section">
+    <article>
+        <div>
+            <h1>¿Te consideras un verdadero fan de la magia de Disney?</h1>
+            <input type="radio" name="option" id="option" @change="mostrartemplate(1)" >Si
+            <input type="radio" name="option" id="option" @change="mostrartemplate(0)" >No
+        </div>
+        <hr>
+        <template v-if="mostrar === 1">
+            <h3>Describe tu recuerdo más mágico relacionado con Disney</h3>
+            <textarea name="" id="" v-model="memorie"></textarea>
+            <h3>¿Qué personaje de Disney estuvo presente en ese momento mágico?</h3>
+            <input type="text" v-model="whichCharact">
+            <div id="app">
+                <h3>Agrega tus personajes mágicos favoritos</h3>
+                <input v-model="newCharacter" type="text" placeholder="Escribe el nombre de un personaje"/>
+                <button @click="addCharacter">Agregar</button>               
+                <ul>
+                    <li v-for="(character, index) in characters" :key="index">
+                      {{character}}
+                      <button @click="eliminar(index)">Eliminar</button>
+                    </li>
+                  </ul>
+              </div> 
+
+              <p>
+                <button @click="mostrarResultado()">{{muestra}}</button>
+              </p>
+              
+              <article v-if="resultado === true">
+                <h3>{{memorie}}</h3>
+                <h3>{{whichCharact}}</h3>
+                <ul>
+                    <li v-for="(character, index) in characters" :key="index">
+                      {{character}}
+                      <button @click="eliminar(index)">Eliminar</button>
+                    </li>
+                  </ul>
+            </article>
+        </template>
+
+
+
+        <p v-if="mostrar === 0">Gracias por participar</p>
+    </article>
+</section>
+
+    <script src="./js/script.js"></script>
+    </body>
+</html>
